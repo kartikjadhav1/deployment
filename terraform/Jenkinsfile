@@ -13,7 +13,9 @@ pipeline {
 
         stage('Init') {
             steps {
-                sh 'terraform init'
+                dir('terraform') {
+                    sh 'terraform init'
+                }
             }
         }
 
@@ -22,7 +24,9 @@ pipeline {
                 expression { params.ACTION == 'apply' }
             }
             steps {
-                sh 'terraform plan -out=tfplan'
+                dir('terraform') {
+                    sh 'terraform plan -out=tfplan'
+                }
             }
         }
 
@@ -31,7 +35,9 @@ pipeline {
                 expression { params.ACTION == 'apply' }
             }
             steps {
-                sh 'terraform apply -auto-approve tfplan'
+                dir('terraform') {
+                    sh 'terraform apply -auto-approve tfplan'
+                }
             }
         }
 
@@ -40,7 +46,9 @@ pipeline {
                 expression { params.ACTION == 'destroy' }
             }
             steps {
-                sh 'terraform destroy -auto-approve'
+                dir('terraform') {
+                    sh 'terraform destroy -auto-approve'
+                }
             }
         }
     }
