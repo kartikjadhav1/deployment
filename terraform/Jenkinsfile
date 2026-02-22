@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'ACTION',
+            choices: ['apply', 'destroy'],
+            description: 'Choose Terraform action'
+        )
+    }
+
+    stages {
+
+        stage('Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+
+        stage('Plan') {
+            when {
+                expression { params.ACTION == 'apply' }
+            }
+            steps {
+                sh 'terraform plan -out=tfplan'
+            }
+        }
+
+        stage('Apply') {
+            when {
+                expression { params.ACTION == 'apply' }
+            }
+            steps {
+                sh 'terraform apply -auto-approve tfplan'
+            }
+        }
+
+        stage('Destroy') {
+            when {
+                expression { params.ACTION == 'destroy' }
+            }
+            steps {
+                sh 'terraform destroy -auto-approve'
+            }
+        }
+    }
+}
