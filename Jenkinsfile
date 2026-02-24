@@ -55,13 +55,11 @@ pipeline {
 
     post {
         success {
-            steps {
-                sh """
-                    aws eks update-kubeconfig --name ${CLUSTER_NAME} --region ${AWS_REGION}
-                    echo "Deployment successful!"
-                    kubectl get service beyond-mumbai-service
-                """
-            }
+            sh """
+                aws eks update-kubeconfig --name ${CLUSTER_NAME} --region ${AWS_REGION}
+                echo "Deployment successful!"
+                kubectl get service beyond-mumbai-service
+            """
         }
     }
 }
