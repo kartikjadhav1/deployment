@@ -38,16 +38,16 @@ pipeline {
                     aws eks update-kubeconfig --name ${CLUSTER_NAME} --region ${AWS_REGION}
 
                     if kubectl get deployment beyond-mumbai-app 2>/dev/null; then
-                        kubectl set image deployment/beyond-mumbai-app \
+                        kubectl set image deployment/my-app \
                         web-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${IMAGE_REPO}:${IMAGE_TAG}
                     else
                         kubectl apply -f k8s/deploy.yaml
                         kubectl apply -f k8s/service.yaml
-                        kubectl set image deployment/beyond-mumbai-app \
+                        kubectl set image deployment/my-app \
                         web-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${IMAGE_REPO}:${IMAGE_TAG}
                     fi
 
-                    kubectl rollout status deployment/beyond-mumbai-app
+                    kubectl rollout status deployment/my-app
                 """
             }
         }
