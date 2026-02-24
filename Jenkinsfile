@@ -37,7 +37,7 @@ pipeline {
                 sh """
                     aws eks update-kubeconfig --name ${CLUSTER_NAME} --region ${AWS_REGION}
 
-                    if kubectl get deployment beyond-mumbai-app 2>/dev/null; then
+                    if kubectl get deployment my-app 2>/dev/null; then
                         kubectl set image deployment/my-app \
                         web-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${IMAGE_REPO}:${IMAGE_TAG}
                     else
@@ -58,7 +58,7 @@ pipeline {
             sh """
                 aws eks update-kubeconfig --name ${CLUSTER_NAME} --region ${AWS_REGION}
                 echo "Deployment successful!"
-                kubectl get service beyond-mumbai-service
+                kubectl get service my-app-service
             """
         }
     }
