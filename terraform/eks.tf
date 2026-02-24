@@ -12,10 +12,9 @@ resource "aws_eks_cluster" "main" {
   version  = "1.34"
 
   vpc_config {
-    # Referencing the VPC module from our previous step
+
     subnet_ids = module.vpc.private_subnets
     
-    # Optional: Keep the API server endpoint public so you can connect from home
     endpoint_private_access = true
     endpoint_public_access  = true
   }
@@ -34,7 +33,7 @@ resource "aws_eks_node_group" "main" {
 
   instance_types = ["t3.medium"]
 
-  # These settings help with smooth updates
+
   update_config {
     max_unavailable = 1
   }

@@ -10,14 +10,13 @@ terraform {
     key    = "terraform.tfstate"
     region = "us-east-1"
     
-    # Enable S3 native state locking
     use_lockfile = true
     encrypt = true
 }
 }
 
 
-# Configure the AWS Provider
+
 provider "aws" {
   region = "us-east-1"
 }

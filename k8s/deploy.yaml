@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: 173378532619.dkr.ecr.us-east-1.amazonaws.com/beyond-mumbai:latest
+        image: nginx
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 
